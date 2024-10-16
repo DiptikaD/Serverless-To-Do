@@ -11,10 +11,10 @@ public class ToDoService {
     @Autowired
     private ToDoRepository toDoRepository;
 
-//    public ToDo createToDo(ToDo todo){
-//        todo.setId(java.util.UUID.randomUUID().toString());
-//        return toDoRepository.save(todo);
-//    }
+    public ToDo createToDo(ToDo todo){
+        todo.setId(java.util.UUID.randomUUID().toString());
+        return toDoRepository.save(todo);
+    }
 
     public Optional<ToDo> getToDoByID(String id){
         return toDoRepository.findById(id);
