@@ -19,17 +19,17 @@ public class ToDoController {
         return toDoService.createToDo(todo);
     }
 
-    @GetMapping
-    public ResponseEntity<ToDo> getToDoById(@PathVariable String id){
-        Optional<ToDo> toDoOptional = toDoService.getToDoByID(id);
-        return toDoOptional.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public Iterable<ToDo> getAllToDos(){
-        return toDoService.getAllToDo();
-    }
+//    @GetMapping
+//    public ResponseEntity<ToDo> getToDoById(@PathVariable String id){
+//        Optional<ToDo> toDoOptional = toDoService.getToDoByID(id);
+//        return toDoOptional.map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+//
+//    @GetMapping
+//    public Iterable<ToDo> getAllToDos(){
+//        return toDoService.getAllToDo();
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ToDo> updateToDo(@PathVariable String id, @RequestBody ToDo toDo){
@@ -38,9 +38,9 @@ public class ToDoController {
         return ResponseEntity.ok(updatedToDo);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ToDo> deleteToDo(@PathVariable String id){
-        toDoService.deleteToDoByID(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<ToDo> deleteToDo(@PathVariable String id){
+//        toDoService.deleteToDoByID(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }
