@@ -40,6 +40,15 @@ public class ToDoRepository {
         return Optional.empty();
     }
 
+    public void deleteById(String id){
+        DeleteItemRequest request = DeleteItemRequest.builder()
+                .tableName("your_table_name")
+                .key(Collections.singletonMap("id", AttributeValue.builder().s(id).build()))
+                .build();
+
+        dynamoDBClient.deleteItem(request);
+    }
+
     public ToDo fromAttributeMap(Map<String, AttributeValue> item){
         String id = item.get("id").s();
         String title = item.get("title").s();
