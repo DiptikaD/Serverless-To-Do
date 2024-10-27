@@ -17,6 +17,13 @@ public class ToDo {
        private String description;
        private boolean completed;
 
+       public ToDo(String id, String title, String description, boolean completed) {
+              this.id = id;
+              this.title = title;
+              this.description = description;
+              this.completed = completed;
+       }
+
        public Map<String, AttributeValue> toAttributeMap(){
               Map<String, AttributeValue> attributeValueMap = new HashMap<>();
 
