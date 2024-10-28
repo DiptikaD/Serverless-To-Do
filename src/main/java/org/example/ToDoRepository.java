@@ -49,6 +49,18 @@ public class ToDoRepository {
         dynamoDBClient.deleteItem(request);
     }
 
+    public void update (ToDo toDo){
+        UpdateItemRequest request = UpdateItemRequest.builder()
+                .tableName("your_table_name")
+                .key(Collections.singletonMap("id", AttributeValue.builder().s(toDo.getId()).build()))
+                .updateExpression("SET #title =:title")
+                .expressionAttributeNames(Collections.singletonMap("#name", "name"))
+                .expressionAttributeValues(Collections.singletonMap(":name", AttributeValue.builder().s(toDo.getTitle()).build()))
+                .build();
+
+        dynamoDBClient.updateItem(request);
+    }
+
     public ToDo fromAttributeMap(Map<String, AttributeValue> item){
         String id = item.get("id").s();
         String title = item.get("title").s();
