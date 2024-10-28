@@ -6,8 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class ToDoRepository {
@@ -68,5 +70,18 @@ public class ToDoRepository {
         boolean completed = Boolean.parseBoolean(item.get("completed").bool().toString());
 
         return new ToDo(id, title,description, completed);
+    }
+
+    public List<ToDo> findAll() {
+        ScanRequest request = ScanRequest.builder()
+                .tableName("your_table_name")
+                .build();
+
+        ScanResponse response = dynamoDBClient.scan(request);
+
+        return response.items().stream()
+                .map(this::fromAttributeMap)
+                .collect(Collectors.toList());
+
     }
 }
