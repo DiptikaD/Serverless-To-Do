@@ -1,6 +1,7 @@
 package org.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +16,23 @@ public class ToDoController {
     private ToDoService toDoService;
 
     @PostMapping
-    public ToDo createToDo(@RequestBody ToDo todo){
-        return toDoService.createToDo(todo);
+    public ResponseEntity<ToDo> createToDo(@RequestBody ToDo todo){
+        ToDo createdToDo = toDoService.createToDo(todo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdToDo);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<ToDo> getToDoById(@PathVariable String id) {
         Optional<ToDo> toDoOptional = toDoService.getToDoByID(id);
         return toDoOptional
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-//
-//    @GetMapping
-//    public Iterable<ToDo> getAllToDos(){
-//        return toDoService.getAllToDo();
-//    }
+
+    @GetMapping
+    public Iterable<ToDo> getAllToDos(){
+        return toDoService.getAllToDo();
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ToDo> updateToDo(@PathVariable String id, @RequestBody ToDo toDo){
