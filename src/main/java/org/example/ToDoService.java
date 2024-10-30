@@ -24,7 +24,8 @@ public class ToDoService {
         return toDoRepository.findAll();
     }
 
-    public ToDo updateToDo(ToDo todo){return toDoRepository.save(todo);
+    public ToDo updateToDo(ToDo todo){
+        return toDoRepository.save(todo);
     }
 
     public void deleteToDoByID(String id){
