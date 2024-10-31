@@ -56,9 +56,12 @@ public class ToDoRepository {
         UpdateItemRequest request = UpdateItemRequest.builder()
                 .tableName(tableName)
                 .key(Collections.singletonMap("id", AttributeValue.builder().s(toDo.getId()).build()))
-                .updateExpression("SET #title =:title")
-                .expressionAttributeNames(Collections.singletonMap("#name", "name"))
-                .expressionAttributeValues(Collections.singletonMap(":name", AttributeValue.builder().s(toDo.getTask()).build()))
+                .updateExpression("SET #task =:task, #description = :description, #completed = :completed")
+                .expressionAttributeNames(Map.of("#task", "task", "#description", "description", "#completed", "completed"))
+                .expressionAttributeValues(Map.of(
+                        ":task", AttributeValue.builder().s(toDo.getTask()).build(),
+                        ":description", AttributeValue.builder().s(toDo.getDescription()).build(),
+                        ":completed", AttributeValue.builder().bool(toDo.isCompleted()).build()))
                 .build();
 
         dynamoDBClient.updateItem(request);
