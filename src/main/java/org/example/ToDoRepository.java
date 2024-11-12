@@ -1,14 +1,12 @@
 package org.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.services.dynamodb.model.*;
-
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -16,7 +14,8 @@ public class ToDoRepository {
     private final DynamoDbClient dynamoDBClient;
     private final String tableName = "ToDo";
 
-    public ToDoRepository(DynamoDbClient dynamoDBClient){
+    @Autowired
+    public ToDoRepository(@Qualifier("dbClient") DynamoDbClient dynamoDBClient){
         this.dynamoDBClient = dynamoDBClient;
     }
 
@@ -29,10 +28,14 @@ public class ToDoRepository {
         return toDo;
     }
 
-    public Optional<ToDo> findById(String id){
+    public Optional<ToDo> findByIdandTask(String id, String task){
+        Map<String, AttributeValue> key = new HashMap<>();
+        key.put("id", AttributeValue.builder().s(id).build());
+        key.put("task", AttributeValue.builder().s(task).build());
+
         GetItemRequest request = GetItemRequest.builder()
                 .tableName(tableName)
-                .key(Collections.singletonMap("id", AttributeValue.builder().s(id).build()))
+                .key(key)
                 .build();
         GetItemResponse response = dynamoDBClient.getItem(request);
 
@@ -43,10 +46,15 @@ public class ToDoRepository {
         return Optional.empty();
     }
 
-    public void deleteById(String id){
+
+    public void deleteByIdandTask(String id, String task){
+        Map<String, AttributeValue> key = new HashMap<>();
+        key.put("id", AttributeValue.builder().s(id).build());
+        key.put("task", AttributeValue.builder().s(task).build());
+
         DeleteItemRequest request = DeleteItemRequest.builder()
                 .tableName(tableName)
-                .key(Collections.singletonMap("id", AttributeValue.builder().s(id).build()))
+                .key(key)
                 .build();
 
         dynamoDBClient.deleteItem(request);
