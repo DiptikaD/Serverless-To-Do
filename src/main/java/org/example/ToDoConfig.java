@@ -19,7 +19,7 @@ public class ToDoConfig {
     @Value("${cloud.aws.credentials.secret-key}")
     private String secretKey;
 
-    @Bean
+    @Bean("dbClient")
     public DynamoDbClient dynamoDbClient() {
         return DynamoDbClient.builder()
                 .region(Region.of(region))
