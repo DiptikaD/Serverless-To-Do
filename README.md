@@ -5,7 +5,8 @@ A personal application to allow me to create a checklist of items to complete. U
 
 **Future Implementations**
 - Reset task completion to false after the day is complete
+- Move the application to a Lambda
 - Create a front-end display to smoothly interact with the API
 
 
-This project is to better my understanding of how to connect to Amazon Web Services via DynamoDB.
+This project is to better my understanding of cloud computing and how to connect to Amazon Web Services via DynamoDB.
